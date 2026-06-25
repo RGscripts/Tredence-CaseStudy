@@ -25,7 +25,17 @@ def _load_dotenv():
         os.environ.setdefault(key, value)
 
 
+def _load_st_secrets():
+    try:
+        import streamlit as st
+        for key, value in st.secrets.items():
+            os.environ.setdefault(key, str(value))
+    except Exception:
+        pass
+
+
 _load_dotenv()
+_load_st_secrets()
 
 # Gemini (primary) — OpenAI-compatible endpoint
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
